@@ -5,6 +5,10 @@
  */
 package Vista;
 
+import Modelo.Persona;
+import Modelo.Usuario;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Sanix
@@ -44,6 +48,7 @@ public class Registro extends javax.swing.JFrame {
         txtApellido = new javax.swing.JTextField();
         txtNombre = new javax.swing.JTextField();
         txtCedula = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Registrarse");
@@ -63,6 +68,20 @@ public class Registro extends javax.swing.JFrame {
         password2.setText("Repetir Password:");
 
         btnAgregar.setText("Agregar Usuario");
+        btnAgregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 2, 19)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(51, 51, 255));
+        jLabel1.setText("Login");
+        jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel1MouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -89,7 +108,8 @@ public class Registro extends javax.swing.JFrame {
                             .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtPassword2, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(txtPassword2, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -125,6 +145,8 @@ public class Registro extends javax.swing.JFrame {
                     .addComponent(txtPassword2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnAgregar)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -144,10 +166,45 @@ public class Registro extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
+        // TODO add your handling code here:
+        this.setVisible(false);
+        Login login = new Login();
+        login.setVisible(true);
+    }//GEN-LAST:event_jLabel1MouseClicked
+
+    private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
+        // TODO add your handling code here:
+        if (txtCedula.getText().isEmpty() && txtNombre.getText().isEmpty() && txtApellido.getText().isEmpty() && txtTelefono.getText().isEmpty() && txtPassword.getText().isEmpty() && txtPassword2.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Llene todos lo campos", "Advertencia", JOptionPane.WARNING_MESSAGE);
+        } else {
+            if (txtPassword.getText().equals(txtPassword2.getText())) {
+                Persona persona = new Persona(txtCedula.getText(), txtNombre.getText(), txtApellido.getText(), Integer.parseInt(txtTelefono.getText()), txtUsuario.getText(), txtPassword.getText());
+                Usuario user = new Usuario();
+                user.agregarUsuario(persona);
+                JOptionPane.showMessageDialog(this, "Se agrego corectamente al gusuario" + persona.getUsuario(), "Correcto", JOptionPane.INFORMATION_MESSAGE);
+                this.limpiar();
+            } else {
+                JOptionPane.showMessageDialog(this, "Las contraseñas no coinciden", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+
+        }
+    }//GEN-LAST:event_btnAgregarActionPerformed
+
+    public void limpiar() {
+        txtApellido.setText("");
+        txtCedula.setText("");
+        txtNombre.setText("");
+        txtPassword.setText("");
+        txtPassword2.setText("");
+        txtTelefono.setText("");
+        txtUsuario.setText("");
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel apellido;
     private javax.swing.JButton btnAgregar;
     private javax.swing.JLabel cedula;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel nombre;
     private javax.swing.JLabel password;

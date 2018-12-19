@@ -5,6 +5,9 @@
  */
 package Vista;
 
+import Modelo.Usuario;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Sanix
@@ -43,6 +46,11 @@ public class Login extends javax.swing.JFrame {
         lblPassword.setText("Contraseña:");
 
         btnIngresar.setText("Ingresar");
+        btnIngresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnIngresarActionPerformed(evt);
+            }
+        });
 
         lblRegistrarse.setFont(new java.awt.Font("Tahoma", 2, 19)); // NOI18N
         lblRegistrarse.setForeground(new java.awt.Color(51, 51, 255));
@@ -112,6 +120,18 @@ public class Login extends javax.swing.JFrame {
         Registro registro = new Registro();
         registro.setVisible(true);
     }//GEN-LAST:event_lblRegistrarseMouseClicked
+
+    private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
+        // TODO add your handling code here:
+        Usuario user = new Usuario();
+        if (user.Login(txtUsuario.getText(), txtPassword.getText())) {
+            this.setVisible(false);
+            Principal principal = new Principal();
+            principal.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(this, "Usuario o Password incorrectos", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnIngresarActionPerformed
 
     /**
      * @param args the command line arguments

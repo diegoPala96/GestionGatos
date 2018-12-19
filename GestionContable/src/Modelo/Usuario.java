@@ -6,6 +6,7 @@
 package Modelo;
 
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -14,10 +15,6 @@ import java.util.ArrayList;
 public class Usuario {
 
     private ArrayList<Persona> usuarios;
-
-    public Usuario() {
-        this.usuarios = new ArrayList<>();
-    }
 
     public boolean agregarUsuario(Persona persona) {
         boolean resultado = false;
@@ -29,10 +26,14 @@ public class Usuario {
 
     public boolean Login(String usuario, String password) {
         boolean resultado = false;
-        for (Persona persona : usuarios) {
-            if ((usuario.equals(persona.getUsuario())) && (usuario.equals(persona.getPassword()))) {
-                resultado = true;
+        try {
+            for (Persona persona : usuarios) {
+                if ((usuario.equals(persona.getUsuario())) && (usuario.equals(persona.getPassword()))) {
+                    resultado = true;
+                }
             }
+        } catch (Exception e) {
+            resultado = false;
         }
         return resultado;
     }
