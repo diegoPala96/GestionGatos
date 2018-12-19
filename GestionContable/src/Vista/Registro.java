@@ -15,6 +15,8 @@ import javax.swing.JOptionPane;
  */
 public class Registro extends javax.swing.JFrame {
 
+    private Usuario user;
+
     /**
      * Creates new form Registro
      */
@@ -175,12 +177,12 @@ public class Registro extends javax.swing.JFrame {
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         // TODO add your handling code here:
+        user = new Usuario();
         if (txtCedula.getText().isEmpty() && txtNombre.getText().isEmpty() && txtApellido.getText().isEmpty() && txtTelefono.getText().isEmpty() && txtPassword.getText().isEmpty() && txtPassword2.getText().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Llene todos lo campos", "Advertencia", JOptionPane.WARNING_MESSAGE);
         } else {
             if (txtPassword.getText().equals(txtPassword2.getText())) {
                 Persona persona = new Persona(txtCedula.getText(), txtNombre.getText(), txtApellido.getText(), Integer.parseInt(txtTelefono.getText()), txtUsuario.getText(), txtPassword.getText());
-                Usuario user = new Usuario();
                 user.agregarUsuario(persona);
                 JOptionPane.showMessageDialog(this, "Se agrego corectamente al gusuario" + persona.getUsuario(), "Correcto", JOptionPane.INFORMATION_MESSAGE);
                 this.limpiar();
@@ -200,6 +202,16 @@ public class Registro extends javax.swing.JFrame {
         txtTelefono.setText("");
         txtUsuario.setText("");
     }
+
+    public Usuario getUser() {
+        return user;
+    }
+
+    public void setUser(Usuario user) {
+        this.user = user;
+    }
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel apellido;
     private javax.swing.JButton btnAgregar;

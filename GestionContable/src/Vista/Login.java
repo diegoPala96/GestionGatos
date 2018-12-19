@@ -5,6 +5,7 @@
  */
 package Vista;
 
+import Modelo.Persona;
 import Modelo.Usuario;
 import javax.swing.JOptionPane;
 
@@ -13,6 +14,8 @@ import javax.swing.JOptionPane;
  * @author Sanix
  */
 public class Login extends javax.swing.JFrame {
+    
+    private Registro registro = new Registro();
 
     /**
      * Creates new form Login
@@ -123,8 +126,7 @@ public class Login extends javax.swing.JFrame {
 
     private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
         // TODO add your handling code here:
-        Usuario user = new Usuario();
-        if (user.Login(txtUsuario.getText(), txtPassword.getText())) {
+        if (registro.getUser().Login(txtUsuario.getText(), txtPassword.getText())) {
             this.setVisible(false);
             Principal principal = new Principal();
             principal.setVisible(true);
