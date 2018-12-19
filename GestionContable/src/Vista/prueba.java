@@ -14,12 +14,14 @@ import Modelo.Usuario;
  */
 public class prueba {
     public static void main(String[] args) {
-        Persona persona = new Persona("0106229164", "Jorge", "Sanisaca", 12, "jsanisaca", "cuenca");
+        Persona persona1 = new Persona("0106229164", "Jorge", "Sanisaca", 12, "jbarbebecho", "cuenca");
+        Persona persona2 = new Persona("0106229164", "Jorge", "Sanisaca", 12, "apaqui", "cuenca");
+        Persona persona3 = new Persona("0106229164", "Jorge", "Sanisaca", 12, "jsanisaca", "cuenca");
         Usuario user = new Usuario();
-        if(user.agregarUsuario(persona)){
-            System.out.println("usuario agregado");
-        }
-        if(user.Login("jsanisaca", "cuenca")){
+        user.agregarUsuario(persona1);
+        user.agregarUsuario(persona2);
+        user.agregarUsuario(persona3);
+        if(user.Login("apaqui", "cuenca")){
             System.out.println("El usuario eciste");
         }else{
             System.out.println("No existe");

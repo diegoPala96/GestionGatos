@@ -29,8 +29,9 @@ public class Usuario {
 
     public boolean Login(String usuario, String password) {
         boolean resultado = false;
+        System.out.println(this.getUsuarios().size());
         try {
-            for (Persona persona : usuarios) {
+            for (Persona persona : this.getUsuarios()) {
                 if ((usuario.equals(persona.getUsuario())) && (password.equals(persona.getPassword()))) {
                     resultado = true;
                 }
