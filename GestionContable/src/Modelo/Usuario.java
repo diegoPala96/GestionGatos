@@ -5,35 +5,44 @@
  */
 package Modelo;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Sanix
  */
-public class Usuario extends Persona {
+public class Usuario {
 
-    private String usuario;
-    private String password;
+    private ArrayList<Persona> usuarios;
 
-    public Usuario(String usuario, String password, String cedula, String nombre, String apellido, int telefono) {
-        super(cedula, nombre, apellido, telefono);
-        this.usuario = usuario;
-        this.password = password;
+    public Usuario() {
+        this.usuarios = new ArrayList<>();
     }
 
-    public String getUsuario() {
-        return usuario;
+    public boolean agregarUsuario(Persona persona) {
+        boolean resultado = false;
+        if (usuarios.add(persona)) {
+            resultado = true;
+        }
+        return resultado;
     }
 
-    public void setUsuario(String usuario) {
-        this.usuario = usuario;
+    public boolean Login(String usuario, String password) {
+        boolean resultado = false;
+        for (Persona persona : usuarios) {
+            if ((usuario.equals(persona.getUsuario())) && (usuario.equals(persona.getPassword()))) {
+                resultado = true;
+            }
+        }
+        return resultado;
     }
 
-    public String getPassword() {
-        return password;
+    public ArrayList<Persona> getUsuarios() {
+        return usuarios;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setUsuarios(ArrayList<Persona> usuarios) {
+        this.usuarios = usuarios;
     }
 
 }
