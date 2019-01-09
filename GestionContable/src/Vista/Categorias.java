@@ -9,12 +9,12 @@ package Vista;
  *
  * @author Sanix
  */
-public class Ingresos extends javax.swing.JInternalFrame {
+public class Categorias extends javax.swing.JInternalFrame {
 
     /**
-     * Creates new form Ingresos
+     * Creates new form Categorias
      */
-    public Ingresos() {
+    public Categorias() {
         initComponents();
     }
 
@@ -30,10 +30,8 @@ public class Ingresos extends javax.swing.JInternalFrame {
         pnlRegistrar = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
         txtDetalle = new javax.swing.JTextField();
         txtMonto = new javax.swing.JTextField();
-        datFecha = new com.toedter.calendar.JDateChooser();
         chkNuevo = new javax.swing.JCheckBox();
         btnGuardar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
@@ -44,20 +42,15 @@ public class Ingresos extends javax.swing.JInternalFrame {
         jButton2 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jLabel5 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
 
         setClosable(true);
-        setTitle("Ingresos");
-        setToolTipText("");
+        setTitle("Categorias");
 
-        pnlRegistrar.setBorder(javax.swing.BorderFactory.createTitledBorder("Registrar Ingresos"));
+        pnlRegistrar.setBorder(javax.swing.BorderFactory.createTitledBorder("Registrar Categoria"));
 
         jLabel1.setText("Detalle:");
 
-        jLabel2.setText("Monto:");
-
-        jLabel3.setText("Fecha:");
+        jLabel2.setText("Descripcion:");
 
         chkNuevo.setText("Nuevo");
 
@@ -79,14 +72,12 @@ public class Ingresos extends javax.swing.JInternalFrame {
                     .addGroup(pnlRegistrarLayout.createSequentialGroup()
                         .addGroup(pnlRegistrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3))
+                            .addComponent(jLabel2))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(pnlRegistrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(txtMonto, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtDetalle, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(datFecha, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 279, Short.MAX_VALUE)))
-                    .addGroup(pnlRegistrarLayout.createSequentialGroup()
+                        .addGroup(pnlRegistrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtMonto, javax.swing.GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE)
+                            .addComponent(txtDetalle)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlRegistrarLayout.createSequentialGroup()
                         .addComponent(chkNuevo)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnGuardar)
@@ -106,18 +97,14 @@ public class Ingresos extends javax.swing.JInternalFrame {
                     .addComponent(jLabel2)
                     .addComponent(txtMonto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(pnlRegistrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel3)
-                    .addComponent(datFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlRegistrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(chkNuevo)
                     .addComponent(btnGuardar)
                     .addComponent(btnCancelar))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(168, Short.MAX_VALUE))
         );
 
-        pnlListar.setBorder(javax.swing.BorderFactory.createTitledBorder("Listado de Ingresos"));
+        pnlListar.setBorder(javax.swing.BorderFactory.createTitledBorder("Listado de Categorias"));
 
         jLabel4.setText("Buscar:");
 
@@ -140,12 +127,6 @@ public class Ingresos extends javax.swing.JInternalFrame {
         ));
         jScrollPane1.setViewportView(jTable1);
 
-        jLabel5.setText("Total Ingresos");
-
-        jTextField1.setEditable(false);
-        jTextField1.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
-        jTextField1.setText("0");
-
         javax.swing.GroupLayout pnlListarLayout = new javax.swing.GroupLayout(pnlListar);
         pnlListar.setLayout(pnlListarLayout);
         pnlListarLayout.setHorizontalGroup(
@@ -161,11 +142,7 @@ public class Ingresos extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton1)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton2))
-                    .addGroup(pnlListarLayout.createSequentialGroup()
-                        .addComponent(jLabel5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jButton2)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnlListarLayout.setVerticalGroup(
@@ -180,12 +157,8 @@ public class Ingresos extends javax.swing.JInternalFrame {
                             .addComponent(jLabel4)
                             .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pnlListarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -195,7 +168,7 @@ public class Ingresos extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(pnlRegistrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(49, 49, 49)
                 .addComponent(pnlListar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
@@ -217,17 +190,13 @@ public class Ingresos extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JCheckBox chkNuevo;
-    private com.toedter.calendar.JDateChooser datFecha;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JPanel pnlListar;
     private javax.swing.JPanel pnlRegistrar;
     private javax.swing.JTextField txtBuscar;
