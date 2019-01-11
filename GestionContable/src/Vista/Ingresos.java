@@ -42,6 +42,7 @@ public class Ingresos extends javax.swing.JInternalFrame {
         chkNuevo = new javax.swing.JCheckBox();
         btnGuardar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
+        dateFecha2 = new com.toedter.calendar.JDateChooser();
         pnlListar = new javax.swing.JPanel();
         lblBuscar = new javax.swing.JLabel();
         txtBuscar = new javax.swing.JTextField();
@@ -104,7 +105,8 @@ public class Ingresos extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(pnlRegistrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(txtMonto, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 279, Short.MAX_VALUE)
-                            .addComponent(txtDetalle, javax.swing.GroupLayout.Alignment.LEADING)))
+                            .addComponent(txtDetalle, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(dateFecha2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(pnlRegistrarLayout.createSequentialGroup()
                         .addComponent(chkNuevo)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -125,7 +127,9 @@ public class Ingresos extends javax.swing.JInternalFrame {
                     .addComponent(lblMonto)
                     .addComponent(txtMonto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(lblFecha)
+                .addGroup(pnlRegistrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lblFecha)
+                    .addComponent(dateFecha2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlRegistrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(chkNuevo)
@@ -244,7 +248,7 @@ public class Ingresos extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         txtDetalle.setText("");
         txtMonto.setText("");
-        datFecha.setDate(null);
+        dateFecha2.setDate(null);
         chkNuevo.setSelected(false);
         btnCancelar.setEnabled(false);
         btnGuardar.setEnabled(false);
@@ -253,7 +257,7 @@ public class Ingresos extends javax.swing.JInternalFrame {
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         // TODO add your handling code here:
         Ingreso ingreso = new Ingreso();
-        if (txtDetalle.getText().length() == 0 || txtMonto.getText().length() == 0 || datFecha.getDate() == null) {
+        if (txtDetalle.getText().length() == 0 || txtMonto.getText().length() == 0 || dateFecha2.getDate() == null) {
             JOptionPane.showMessageDialog(this, "Verifique que todos los campos esten llenos", "Verificar Campos", JOptionPane.WARNING_MESSAGE);
         } else {
             if (validarMonto(txtMonto.getText())) {
@@ -264,7 +268,7 @@ public class Ingresos extends javax.swing.JInternalFrame {
 
                     Calendar cal;
                     int d, m, a;
-                    cal = datFecha.getCalendar();
+                    cal = dateFecha2.getCalendar();
                     
                     d = cal.get(Calendar.DAY_OF_MONTH);
                     m = cal.get(Calendar.MONTH);
@@ -296,6 +300,7 @@ public class Ingresos extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JCheckBox chkNuevo;
+    private com.toedter.calendar.JDateChooser dateFecha2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblBuscar;
     private javax.swing.JLabel lblDetalle;
