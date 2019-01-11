@@ -10,9 +10,9 @@ public class Conexion {
 
 	static Connection con = null;
 
-	String url = "jdbc:mysql://db4free.net:3306/facelectronica";
-	String user = "ptzadmin";
-	String pass = "ptz11990";
+	String url = "jdbc:mysql://db4free.net:3306/proyecto_compras";
+	String user = "diegopalacios";
+	String pass = "DHpc1996";
 
 	public Conexion() {
 
