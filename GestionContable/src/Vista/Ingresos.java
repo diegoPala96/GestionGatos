@@ -15,7 +15,6 @@ import javax.swing.JOptionPane;
  * @author Sanix
  */
 public class Ingresos extends javax.swing.JInternalFrame {
-    private Object datFecha;
 
     /**
      * Creates new form Ingresos
