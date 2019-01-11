@@ -38,12 +38,12 @@ public class Egresos extends javax.swing.JInternalFrame {
         lblFecha = new javax.swing.JLabel();
         txtDetalle = new javax.swing.JTextField();
         txtMonto = new javax.swing.JTextField();
-        datFecha = new com.toedter.calendar.JDateChooser();
         chkNuevo = new javax.swing.JCheckBox();
         btnGuardar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
         lblCategoria = new javax.swing.JLabel();
         cmbCategoria = new javax.swing.JComboBox<>();
+        datFecha = new com.toedter.calendar.JDateChooser();
         pnlListar = new javax.swing.JPanel();
         lblBuscar = new javax.swing.JLabel();
         txtBuscar = new javax.swing.JTextField();
@@ -107,23 +107,21 @@ public class Egresos extends javax.swing.JInternalFrame {
                         .addComponent(btnGuardar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnCancelar))
-                    .addGroup(pnlRegistrarLayout.createSequentialGroup()
-                        .addGroup(pnlRegistrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(pnlRegistrarLayout.createSequentialGroup()
-                                .addGroup(pnlRegistrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lblDetalle)
-                                    .addComponent(lblMonto)
-                                    .addComponent(lblFecha))
-                                .addGap(39, 39, 39)
-                                .addGroup(pnlRegistrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(txtMonto, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(datFecha, javax.swing.GroupLayout.DEFAULT_SIZE, 257, Short.MAX_VALUE)
-                                    .addComponent(txtDetalle)))
-                            .addGroup(pnlRegistrarLayout.createSequentialGroup()
-                                .addComponent(lblCategoria)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(cmbCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                    .addGroup(pnlRegistrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(pnlRegistrarLayout.createSequentialGroup()
+                            .addGroup(pnlRegistrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(lblDetalle)
+                                .addComponent(lblMonto)
+                                .addComponent(lblFecha))
+                            .addGap(39, 39, 39)
+                            .addGroup(pnlRegistrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(txtMonto, javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(txtDetalle)
+                                .addComponent(datFecha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGroup(pnlRegistrarLayout.createSequentialGroup()
+                            .addComponent(lblCategoria)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(cmbCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap())
         );
         pnlRegistrarLayout.setVerticalGroup(
@@ -137,7 +135,7 @@ public class Egresos extends javax.swing.JInternalFrame {
                 .addGroup(pnlRegistrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblMonto)
                     .addComponent(txtMonto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(15, 15, 15)
                 .addGroup(pnlRegistrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(lblFecha)
                     .addComponent(datFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))

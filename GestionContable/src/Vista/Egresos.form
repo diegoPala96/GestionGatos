@@ -68,28 +68,25 @@
                           <EmptySpace max="32767" attributes="0"/>
                           <Component id="btnCancelar" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <Group type="102" attributes="0">
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="lblDetalle" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="lblMonto" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="lblFecha" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                      <Component id="txtMonto" alignment="1" max="32767" attributes="0"/>
-                                      <Component id="datFecha" pref="257" max="32767" attributes="0"/>
-                                      <Component id="txtDetalle" max="32767" attributes="0"/>
-                                  </Group>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="lblDetalle" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblMonto" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblFecha" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <Group type="102" attributes="0">
-                                  <Component id="lblCategoria" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                  <Component id="cmbCategoria" min="-2" pref="257" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="txtMonto" alignment="1" max="32767" attributes="0"/>
+                                  <Component id="txtDetalle" max="32767" attributes="0"/>
+                                  <Component id="datFecha" alignment="0" max="32767" attributes="0"/>
                               </Group>
                           </Group>
-                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <Component id="lblCategoria" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="cmbCategoria" min="-2" pref="257" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
@@ -109,10 +106,10 @@
                       <Component id="lblMonto" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="txtMonto" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
-                      <Component id="lblFecha" alignment="1" min="-2" max="-2" attributes="0"/>
-                      <Component id="datFecha" alignment="1" min="-2" max="-2" attributes="0"/>
+                      <Component id="lblFecha" min="-2" max="-2" attributes="0"/>
+                      <Component id="datFecha" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
@@ -149,8 +146,6 @@
         <Component class="javax.swing.JTextField" name="txtDetalle">
         </Component>
         <Component class="javax.swing.JTextField" name="txtMonto">
-        </Component>
-        <Component class="com.toedter.calendar.JDateChooser" name="datFecha">
         </Component>
         <Component class="javax.swing.JCheckBox" name="chkNuevo">
           <Properties>
@@ -203,6 +198,8 @@
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
           </AuxValues>
+        </Component>
+        <Component class="com.toedter.calendar.JDateChooser" name="datFecha">
         </Component>
       </SubComponents>
     </Container>
