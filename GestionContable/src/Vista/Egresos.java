@@ -5,6 +5,11 @@
  */
 package Vista;
 
+import Modelo.Egreso;
+import java.sql.Date;
+import java.util.Calendar;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Sanix
@@ -28,49 +33,64 @@ public class Egresos extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         pnlRegistrar = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        lblDetalle = new javax.swing.JLabel();
+        lblMonto = new javax.swing.JLabel();
+        lblFecha = new javax.swing.JLabel();
         txtDetalle = new javax.swing.JTextField();
         txtMonto = new javax.swing.JTextField();
         datFecha = new com.toedter.calendar.JDateChooser();
         chkNuevo = new javax.swing.JCheckBox();
         btnGuardar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
-        jLabel6 = new javax.swing.JLabel();
+        lblCategoria = new javax.swing.JLabel();
         cmbCategoria = new javax.swing.JComboBox<>();
         pnlListar = new javax.swing.JPanel();
-        jLabel4 = new javax.swing.JLabel();
+        lblBuscar = new javax.swing.JLabel();
         txtBuscar = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnBuscar = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jLabel5 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        tblListar = new javax.swing.JTable();
+        lblTotal = new javax.swing.JLabel();
+        txtTotal = new javax.swing.JTextField();
 
         setClosable(true);
         setTitle("Egresos");
 
         pnlRegistrar.setBorder(javax.swing.BorderFactory.createTitledBorder("Registrar Egresos"));
 
-        jLabel1.setText("Detalle:");
+        lblDetalle.setText("Detalle:");
 
-        jLabel2.setText("Monto:");
+        lblMonto.setText("Monto:");
 
-        jLabel3.setText("Fecha:");
+        lblFecha.setText("Fecha:");
 
         chkNuevo.setText("Nuevo");
+        chkNuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chkNuevoActionPerformed(evt);
+            }
+        });
 
         btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/guardar.png"))); // NOI18N
         btnGuardar.setText("Guardar");
         btnGuardar.setEnabled(false);
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarActionPerformed(evt);
+            }
+        });
 
         btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/cancelar.png"))); // NOI18N
         btnCancelar.setText("Cancelar");
         btnCancelar.setEnabled(false);
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
 
-        jLabel6.setText("Categoria:");
+        lblCategoria.setText("Categoria:");
 
         cmbCategoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecionar", "Taxi", "Desayuno", "Aluerzo" }));
 
@@ -82,26 +102,28 @@ public class Egresos extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(pnlRegistrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlRegistrarLayout.createSequentialGroup()
-                        .addGroup(pnlRegistrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3))
-                        .addGap(39, 39, 39)
-                        .addGroup(pnlRegistrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtMonto, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(datFecha, javax.swing.GroupLayout.DEFAULT_SIZE, 257, Short.MAX_VALUE)
-                            .addComponent(txtDetalle))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(pnlRegistrarLayout.createSequentialGroup()
                         .addComponent(chkNuevo)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnGuardar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnCancelar))
                     .addGroup(pnlRegistrarLayout.createSequentialGroup()
-                        .addComponent(jLabel6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(cmbCategoria, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGroup(pnlRegistrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pnlRegistrarLayout.createSequentialGroup()
+                                .addGroup(pnlRegistrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblDetalle)
+                                    .addComponent(lblMonto)
+                                    .addComponent(lblFecha))
+                                .addGap(39, 39, 39)
+                                .addGroup(pnlRegistrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txtMonto, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(datFecha, javax.swing.GroupLayout.DEFAULT_SIZE, 257, Short.MAX_VALUE)
+                                    .addComponent(txtDetalle)))
+                            .addGroup(pnlRegistrarLayout.createSequentialGroup()
+                                .addComponent(lblCategoria)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(cmbCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         pnlRegistrarLayout.setVerticalGroup(
@@ -109,19 +131,19 @@ public class Egresos extends javax.swing.JInternalFrame {
             .addGroup(pnlRegistrarLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnlRegistrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
+                    .addComponent(lblDetalle)
                     .addComponent(txtDetalle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlRegistrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
+                    .addComponent(lblMonto)
                     .addComponent(txtMonto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlRegistrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel3)
+                    .addComponent(lblFecha)
                     .addComponent(datFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlRegistrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
+                    .addComponent(lblCategoria)
                     .addComponent(cmbCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlRegistrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -133,15 +155,15 @@ public class Egresos extends javax.swing.JInternalFrame {
 
         pnlListar.setBorder(javax.swing.BorderFactory.createTitledBorder("Listado de Ingresos"));
 
-        jLabel4.setText("Buscar:");
+        lblBuscar.setText("Buscar:");
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/buscar.png"))); // NOI18N
+        btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/buscar.png"))); // NOI18N
 
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/eliminar.png"))); // NOI18N
-        jButton2.setText("Eliminar");
-        jButton2.setEnabled(false);
+        btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/eliminar.png"))); // NOI18N
+        btnEliminar.setText("Eliminar");
+        btnEliminar.setEnabled(false);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblListar.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -152,13 +174,13 @@ public class Egresos extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tblListar);
 
-        jLabel5.setText("Total Egresos");
+        lblTotal.setText("Total Egresos");
 
-        jTextField1.setEditable(false);
-        jTextField1.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
-        jTextField1.setText("0");
+        txtTotal.setEditable(false);
+        txtTotal.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
+        txtTotal.setText("0");
 
         javax.swing.GroupLayout pnlListarLayout = new javax.swing.GroupLayout(pnlListar);
         pnlListar.setLayout(pnlListarLayout);
@@ -169,17 +191,17 @@ public class Egresos extends javax.swing.JInternalFrame {
                 .addGroup(pnlListarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlListarLayout.createSequentialGroup()
-                        .addComponent(jLabel4)
+                        .addComponent(lblBuscar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1)
+                        .addComponent(btnBuscar)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton2))
+                        .addComponent(btnEliminar))
                     .addGroup(pnlListarLayout.createSequentialGroup()
-                        .addComponent(jLabel5)
+                        .addComponent(lblTotal)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnlListarLayout.setVerticalGroup(
@@ -187,18 +209,18 @@ public class Egresos extends javax.swing.JInternalFrame {
             .addGroup(pnlListarLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnlListarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton2)
+                    .addComponent(btnEliminar)
                     .addGroup(pnlListarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlListarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel4)
+                            .addComponent(lblBuscar)
                             .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlListarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblTotal)
+                    .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -226,28 +248,89 @@ public class Egresos extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        // TODO add your handling code here:
+        txtDetalle.setText("");
+        txtMonto.setText("");
+        datFecha.setDate(null);
+        cmbCategoria.setSelectedIndex(0);
+        chkNuevo.setSelected(false);
+        btnCancelar.setEnabled(false);
+        btnGuardar.setEnabled(false);
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void chkNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkNuevoActionPerformed
+        // TODO add your handling code here:
+        if (chkNuevo.isSelected()) {
+            btnCancelar.setEnabled(true);
+            btnGuardar.setEnabled(true);
+        } else {
+            btnCancelar.setEnabled(false);
+            btnGuardar.setEnabled(false);
+        }
+    }//GEN-LAST:event_chkNuevoActionPerformed
+
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        // TODO add your handling code here:
+        Egreso egreso = new Egreso();
+        if (txtDetalle.getText().length() == 0 || txtMonto.getText().length() == 0 || datFecha.getDate() == null || cmbCategoria.getSelectedItem().equals("Seleccionar")) {
+            JOptionPane.showMessageDialog(this, "Verifique que todos los campos esten llenos", "Verificar Campos", JOptionPane.WARNING_MESSAGE);
+        } else {
+            if (validarMonto(txtMonto.getText())) {
+                if (JOptionPane.showConfirmDialog(this, "Esta Seguro que desea agregar el nuevo egreso?", "Confirmar Egreso", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
+                    System.out.println("Agregado");
+                    egreso.setDetalle(txtDetalle.getText());
+                    egreso.setMonto(Double.parseDouble(txtMonto.getText()));
+                    
+                    Calendar cal;
+                    int d, m, a;
+                    cal = datFecha.getCalendar();
+                    
+                    d = cal.get(Calendar.DAY_OF_MONTH);
+                    m = cal.get(Calendar.MONTH);
+                    a = cal.get(Calendar.YEAR) - 1900;
+                    
+                    egreso.setFecha(new Date(a, m, d));
+                    egreso.setCategoria(cmbCategoria.getSelectedItem().toString());
+                } else {
+                    JOptionPane.showMessageDialog(this, "Se ha cancelado la agregacion", "Informacion", JOptionPane.INFORMATION_MESSAGE);
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Verifique que el monto este bien ingresado", "Verificar Monto", JOptionPane.WARNING_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_btnGuardarActionPerformed
+    
+    public boolean validarMonto(String monto) {
+        try {
+            double d = Double.parseDouble(monto);
+        } catch (NumberFormatException e) {
+            return false;
+        }
+        return true;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnCancelar;
+    private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JCheckBox chkNuevo;
     private javax.swing.JComboBox<String> cmbCategoria;
     private com.toedter.calendar.JDateChooser datFecha;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JLabel lblBuscar;
+    private javax.swing.JLabel lblCategoria;
+    private javax.swing.JLabel lblDetalle;
+    private javax.swing.JLabel lblFecha;
+    private javax.swing.JLabel lblMonto;
+    private javax.swing.JLabel lblTotal;
     private javax.swing.JPanel pnlListar;
     private javax.swing.JPanel pnlRegistrar;
+    private javax.swing.JTable tblListar;
     private javax.swing.JTextField txtBuscar;
     private javax.swing.JTextField txtDetalle;
     private javax.swing.JTextField txtMonto;
+    private javax.swing.JTextField txtTotal;
     // End of variables declaration//GEN-END:variables
 }

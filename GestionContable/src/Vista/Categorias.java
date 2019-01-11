@@ -5,6 +5,9 @@
  */
 package Vista;
 
+import Modelo.Categoria;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Sanix
@@ -28,39 +31,54 @@ public class Categorias extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         pnlRegistrar = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        lblDetalle = new javax.swing.JLabel();
+        lblDescripcion = new javax.swing.JLabel();
         txtDetalle = new javax.swing.JTextField();
-        txtMonto = new javax.swing.JTextField();
+        txtDescripcion = new javax.swing.JTextField();
         chkNuevo = new javax.swing.JCheckBox();
         btnGuardar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
         pnlListar = new javax.swing.JPanel();
-        jLabel4 = new javax.swing.JLabel();
+        lblBuscar = new javax.swing.JLabel();
         txtBuscar = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnBuscar = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblCategorias = new javax.swing.JTable();
 
         setClosable(true);
         setTitle("Categorias");
 
         pnlRegistrar.setBorder(javax.swing.BorderFactory.createTitledBorder("Registrar Categoria"));
 
-        jLabel1.setText("Detalle:");
+        lblDetalle.setText("Detalle:");
 
-        jLabel2.setText("Descripcion:");
+        lblDescripcion.setText("Descripcion:");
 
         chkNuevo.setText("Nuevo");
+        chkNuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chkNuevoActionPerformed(evt);
+            }
+        });
 
         btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/guardar.png"))); // NOI18N
         btnGuardar.setText("Guardar");
         btnGuardar.setEnabled(false);
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarActionPerformed(evt);
+            }
+        });
 
         btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/cancelar.png"))); // NOI18N
         btnCancelar.setText("Cancelar");
         btnCancelar.setEnabled(false);
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlRegistrarLayout = new javax.swing.GroupLayout(pnlRegistrar);
         pnlRegistrar.setLayout(pnlRegistrarLayout);
@@ -71,11 +89,11 @@ public class Categorias extends javax.swing.JInternalFrame {
                 .addGroup(pnlRegistrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlRegistrarLayout.createSequentialGroup()
                         .addGroup(pnlRegistrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2))
+                            .addComponent(lblDetalle)
+                            .addComponent(lblDescripcion))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(pnlRegistrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtMonto, javax.swing.GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE)
+                            .addComponent(txtDescripcion, javax.swing.GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE)
                             .addComponent(txtDetalle)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlRegistrarLayout.createSequentialGroup()
                         .addComponent(chkNuevo)
@@ -90,12 +108,12 @@ public class Categorias extends javax.swing.JInternalFrame {
             .addGroup(pnlRegistrarLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnlRegistrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
+                    .addComponent(lblDetalle)
                     .addComponent(txtDetalle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlRegistrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(txtMonto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblDescripcion)
+                    .addComponent(txtDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlRegistrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(chkNuevo)
@@ -106,15 +124,15 @@ public class Categorias extends javax.swing.JInternalFrame {
 
         pnlListar.setBorder(javax.swing.BorderFactory.createTitledBorder("Listado de Categorias"));
 
-        jLabel4.setText("Buscar:");
+        lblBuscar.setText("Buscar:");
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/buscar.png"))); // NOI18N
+        btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/buscar.png"))); // NOI18N
 
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/eliminar.png"))); // NOI18N
-        jButton2.setText("Eliminar");
-        jButton2.setEnabled(false);
+        btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/eliminar.png"))); // NOI18N
+        btnEliminar.setText("Eliminar");
+        btnEliminar.setEnabled(false);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblCategorias.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -125,7 +143,7 @@ public class Categorias extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tblCategorias);
 
         javax.swing.GroupLayout pnlListarLayout = new javax.swing.GroupLayout(pnlListar);
         pnlListar.setLayout(pnlListarLayout);
@@ -136,13 +154,13 @@ public class Categorias extends javax.swing.JInternalFrame {
                 .addGroup(pnlListarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlListarLayout.createSequentialGroup()
-                        .addComponent(jLabel4)
+                        .addComponent(lblBuscar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1)
+                        .addComponent(btnBuscar)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton2)))
+                        .addComponent(btnEliminar)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnlListarLayout.setVerticalGroup(
@@ -150,11 +168,11 @@ public class Categorias extends javax.swing.JInternalFrame {
             .addGroup(pnlListarLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnlListarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton2)
+                    .addComponent(btnEliminar)
                     .addGroup(pnlListarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlListarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel4)
+                            .addComponent(lblBuscar)
                             .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
@@ -185,22 +203,57 @@ public class Categorias extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void chkNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkNuevoActionPerformed
+        // TODO add your handling code here:
+        if (chkNuevo.isSelected()) {
+            btnCancelar.setEnabled(true);
+            btnGuardar.setEnabled(true);
+        } else {
+            btnCancelar.setEnabled(false);
+            btnGuardar.setEnabled(false);
+        }
+    }//GEN-LAST:event_chkNuevoActionPerformed
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        // TODO add your handling code here:
+        txtDetalle.setText("");
+        txtDescripcion.setText("");
+        chkNuevo.setSelected(false);
+        btnCancelar.setEnabled(false);
+        btnGuardar.setEnabled(false);
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        // TODO add your handling code here:
+        Categoria categoria = new Categoria();
+        if (txtDetalle.getText().length() == 0 || txtDescripcion.getText().length() == 0) {
+            JOptionPane.showMessageDialog(this, "Verifique que todos los campos esten llenos", "Verificar Campos", JOptionPane.WARNING_MESSAGE);
+        } else {
+            if (JOptionPane.showConfirmDialog(this, "Esta Seguro que desea agregar la nueva Categoria?", "Confirmar Categoria", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
+                categoria.setDescripcion(txtDescripcion.getText());
+                categoria.setNombre(txtDetalle.getText());
+            } else {
+                JOptionPane.showMessageDialog(this, "Se ha cancelado la agregacion", "Informacion", JOptionPane.INFORMATION_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_btnGuardarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnCancelar;
+    private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JCheckBox chkNuevo;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JLabel lblBuscar;
+    private javax.swing.JLabel lblDescripcion;
+    private javax.swing.JLabel lblDetalle;
     private javax.swing.JPanel pnlListar;
     private javax.swing.JPanel pnlRegistrar;
+    private javax.swing.JTable tblCategorias;
     private javax.swing.JTextField txtBuscar;
+    private javax.swing.JTextField txtDescripcion;
     private javax.swing.JTextField txtDetalle;
-    private javax.swing.JTextField txtMonto;
     // End of variables declaration//GEN-END:variables
 }

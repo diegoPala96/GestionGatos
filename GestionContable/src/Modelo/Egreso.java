@@ -5,7 +5,7 @@
  */
 package Modelo;
 
-import java.util.Calendar;
+import java.util.Date;
 
 /**
  *
@@ -15,14 +15,10 @@ public class Egreso {
 
     private String detalle;
     private double monto;
-    private Calendar fecha;
+    private Date fecha;
     private String categoria;
 
-    public Egreso(String detalle, double monto, Calendar fecha, String categoria) {
-        this.detalle = detalle;
-        this.monto = monto;
-        this.fecha = fecha;
-        this.categoria = categoria;
+    public Egreso() {
     }
 
     public String getDetalle() {
@@ -41,11 +37,11 @@ public class Egreso {
         this.monto = monto;
     }
 
-    public Calendar getFecha() {
+    public Date getFecha() {
         return fecha;
     }
 
-    public void setFecha(Calendar fecha) {
+    public void setFecha(Date fecha) {
         this.fecha = fecha;
     }
 
