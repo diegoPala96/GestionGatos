@@ -1,14 +1,43 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Controlador;
 
-/**
- *
- * @author Sanix
- */
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+
+import javax.swing.JOptionPane;
+
 public class Conexion {
-    
+
+	static Connection con = null;
+
+	String url = "jdbc:mysql://db4free.net:3306/facelectronica";
+	String user = "ptzadmin";
+	String pass = "ptz11990";
+
+	public Conexion() {
+
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
+			con = DriverManager.getConnection(url, user, pass);
+
+			System.out.println("conexion exitosa");
+ 
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "Error de conexion" + e);
+		}
+
+	}
+
+	public static Connection getConnection() {
+		// TODO Auto-generated method stub
+		return con;
+	}
+
+	public static void close(Connection c) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
 }

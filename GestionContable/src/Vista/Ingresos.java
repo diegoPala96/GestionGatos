@@ -15,6 +15,7 @@ import javax.swing.JOptionPane;
  * @author Sanix
  */
 public class Ingresos extends javax.swing.JInternalFrame {
+    private Object datFecha;
 
     /**
      * Creates new form Ingresos
@@ -38,7 +39,6 @@ public class Ingresos extends javax.swing.JInternalFrame {
         lblFecha = new javax.swing.JLabel();
         txtDetalle = new javax.swing.JTextField();
         txtMonto = new javax.swing.JTextField();
-        datFecha = new com.toedter.calendar.JDateChooser();
         chkNuevo = new javax.swing.JCheckBox();
         btnGuardar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
@@ -103,9 +103,8 @@ public class Ingresos extends javax.swing.JInternalFrame {
                             .addComponent(lblFecha))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(pnlRegistrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(txtMonto, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtDetalle, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(datFecha, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 279, Short.MAX_VALUE)))
+                            .addComponent(txtMonto, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 279, Short.MAX_VALUE)
+                            .addComponent(txtDetalle, javax.swing.GroupLayout.Alignment.LEADING)))
                     .addGroup(pnlRegistrarLayout.createSequentialGroup()
                         .addComponent(chkNuevo)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -125,10 +124,8 @@ public class Ingresos extends javax.swing.JInternalFrame {
                 .addGroup(pnlRegistrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblMonto)
                     .addComponent(txtMonto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(pnlRegistrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(lblFecha)
-                    .addComponent(datFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(lblFecha)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlRegistrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(chkNuevo)
@@ -299,7 +296,6 @@ public class Ingresos extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JCheckBox chkNuevo;
-    private com.toedter.calendar.JDateChooser datFecha;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblBuscar;
     private javax.swing.JLabel lblDetalle;

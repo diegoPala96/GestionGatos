@@ -70,9 +70,8 @@
                           </Group>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                              <Component id="txtMonto" alignment="0" max="32767" attributes="0"/>
+                              <Component id="txtMonto" alignment="0" pref="279" max="32767" attributes="0"/>
                               <Component id="txtDetalle" alignment="0" max="32767" attributes="0"/>
-                              <Component id="datFecha" alignment="0" pref="279" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
@@ -100,11 +99,8 @@
                       <Component id="lblMonto" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="txtMonto" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="1" attributes="0">
-                      <Component id="lblFecha" min="-2" max="-2" attributes="0"/>
-                      <Component id="datFecha" min="-2" max="-2" attributes="0"/>
-                  </Group>
+                  <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblFecha" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="chkNuevo" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -135,8 +131,6 @@
         <Component class="javax.swing.JTextField" name="txtDetalle">
         </Component>
         <Component class="javax.swing.JTextField" name="txtMonto">
-        </Component>
-        <Component class="com.toedter.calendar.JDateChooser" name="datFecha">
         </Component>
         <Component class="javax.swing.JCheckBox" name="chkNuevo">
           <Properties>
