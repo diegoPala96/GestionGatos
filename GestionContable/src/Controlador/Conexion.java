@@ -10,6 +10,8 @@ import javax.swing.JOptionPane;
 public class Conexion {
 
     private static Connection conn;
+
+ 
     private final String driver;
     private final String user;
     private final String password;

@@ -5,6 +5,7 @@
  */
 package Vista;
 
+import Controlador.con_Ingresos;
 import Modelo.Ingreso;
 import java.sql.Date;
 import java.util.Calendar;
@@ -275,6 +276,10 @@ public class Ingresos extends javax.swing.JInternalFrame {
                     
                     
                     ingreso.setFecha(new Date(a, m, d));
+                    con_Ingresos ingre= new con_Ingresos();
+                    ingre.Insert(ingreso);
+                    
+                    
                 } else {
                     JOptionPane.showMessageDialog(this, "Se ha cancelado la agregacion", "Informacion", JOptionPane.INFORMATION_MESSAGE);
                 }
@@ -314,4 +319,6 @@ public class Ingresos extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtMonto;
     private javax.swing.JTextField txtTotal;
     // End of variables declaration//GEN-END:variables
+
+
 }

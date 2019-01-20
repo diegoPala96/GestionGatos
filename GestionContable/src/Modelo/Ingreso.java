@@ -11,6 +11,7 @@ import java.util.Date;
  *
  * @author Sanix
  */
+
 public class Ingreso {
 
     private String detalle;

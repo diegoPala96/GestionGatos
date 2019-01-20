@@ -17,7 +17,7 @@ import java.sql.Statement;
 public class Usuarios {
 
     private Conexion conexion = new Conexion();
-    ;
+    
     private Statement stmt;
     private ResultSet rs;
     private String consulta;
