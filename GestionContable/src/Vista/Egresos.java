@@ -5,10 +5,20 @@
  */
 package Vista;
 
+import Controlador.con_Egresos;
+import Controlador.con_categoria;
+import Controlador.fecha;
+import Modelo.Categoria;
 import Modelo.Egreso;
+import java.awt.HeadlessException;
 import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -16,11 +26,16 @@ import javax.swing.JOptionPane;
  */
 public class Egresos extends javax.swing.JInternalFrame {
 
+    private con_categoria conCat = new con_categoria();
+    private con_Egresos conEgr = new con_Egresos();
+
     /**
      * Creates new form Egresos
      */
     public Egresos() {
         initComponents();
+        this.llenarConboCate();
+        this.listar();
     }
 
     /**
@@ -92,8 +107,6 @@ public class Egresos extends javax.swing.JInternalFrame {
 
         lblCategoria.setText("Categoria:");
 
-        cmbCategoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecionar", "Taxi", "Desayuno", "Aluerzo" }));
-
         javax.swing.GroupLayout pnlRegistrarLayout = new javax.swing.GroupLayout(pnlRegistrar);
         pnlRegistrar.setLayout(pnlRegistrarLayout);
         pnlRegistrarLayout.setHorizontalGroup(
@@ -107,21 +120,20 @@ public class Egresos extends javax.swing.JInternalFrame {
                         .addComponent(btnGuardar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnCancelar))
-                    .addGroup(pnlRegistrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(pnlRegistrarLayout.createSequentialGroup()
-                            .addGroup(pnlRegistrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(lblDetalle)
-                                .addComponent(lblMonto)
-                                .addComponent(lblFecha))
-                            .addGap(39, 39, 39)
-                            .addGroup(pnlRegistrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(txtMonto, javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(txtDetalle)
-                                .addComponent(datFecha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                        .addGroup(pnlRegistrarLayout.createSequentialGroup()
-                            .addComponent(lblCategoria)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(cmbCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(pnlRegistrarLayout.createSequentialGroup()
+                        .addGroup(pnlRegistrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblDetalle)
+                            .addComponent(lblMonto)
+                            .addComponent(lblFecha))
+                        .addGap(39, 39, 39)
+                        .addGroup(pnlRegistrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtMonto, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(txtDetalle)
+                            .addComponent(datFecha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(pnlRegistrarLayout.createSequentialGroup()
+                        .addComponent(lblCategoria)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(cmbCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         pnlRegistrarLayout.setVerticalGroup(
@@ -156,22 +168,49 @@ public class Egresos extends javax.swing.JInternalFrame {
         lblBuscar.setText("Buscar:");
 
         btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/buscar.png"))); // NOI18N
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
 
         btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/eliminar.png"))); // NOI18N
         btnEliminar.setText("Eliminar");
         btnEliminar.setEnabled(false);
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
 
         tblListar.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Detalle", "Monto", "Fecha", "Categoria"
             }
-        ));
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.Double.class, java.lang.Object.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tblListar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblListarMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblListar);
 
         lblTotal.setText("Total Egresos");
@@ -248,13 +287,7 @@ public class Egresos extends javax.swing.JInternalFrame {
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
-        txtDetalle.setText("");
-        txtMonto.setText("");
-        datFecha.setDate(null);
-        cmbCategoria.setSelectedIndex(0);
-        chkNuevo.setSelected(false);
-        btnCancelar.setEnabled(false);
-        btnGuardar.setEnabled(false);
+        this.lirmpiarCampos();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void chkNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkNuevoActionPerformed
@@ -279,17 +312,24 @@ public class Egresos extends javax.swing.JInternalFrame {
                     System.out.println("Agregado");
                     egreso.setDetalle(txtDetalle.getText());
                     egreso.setMonto(Double.parseDouble(txtMonto.getText()));
-                    
+
                     Calendar cal;
                     int d, m, a;
                     cal = datFecha.getCalendar();
-                    
+
                     d = cal.get(Calendar.DAY_OF_MONTH);
                     m = cal.get(Calendar.MONTH);
                     a = cal.get(Calendar.YEAR) - 1900;
-                    
+
                     egreso.setFecha(new Date(a, m, d));
-                    egreso.setCategoria(cmbCategoria.getSelectedItem().toString());
+                    egreso.setCategoria(conCat.selectId(cmbCategoria.getSelectedItem().toString()));
+
+                    if (conEgr.Insert(egreso)) {
+                        JOptionPane.showMessageDialog(this, "Se a agregado Correctamente", "Agregado", JOptionPane.INFORMATION_MESSAGE);
+                        this.listar();
+                        this.lirmpiarCampos();
+                    }
+
                 } else {
                     JOptionPane.showMessageDialog(this, "Se ha cancelado la agregacion", "Informacion", JOptionPane.INFORMATION_MESSAGE);
                 }
@@ -298,7 +338,76 @@ public class Egresos extends javax.swing.JInternalFrame {
             }
         }
     }//GEN-LAST:event_btnGuardarActionPerformed
-    
+
+    private void tblListarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblListarMouseClicked
+        // TODO add your handling code here:
+        int filaseleccionada;
+        try {
+            //Guardamos en un entero la fila seleccionada.
+            filaseleccionada = tblListar.getSelectedRow();
+            if (filaseleccionada == -1) {
+                JOptionPane.showMessageDialog(null, "No ha seleccionado ninguna fila.");
+                btnEliminar.setEnabled(false);
+            } else {
+                btnEliminar.setEnabled(true);
+            }
+        } catch (HeadlessException ex) {
+            JOptionPane.showMessageDialog(null, "Error: " + ex + "\nInténtelo nuevamente", " .::Error En la Operacion::.", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_tblListarMouseClicked
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        // TODO add your handling code here:
+        int filaseleccionada = tblListar.getSelectedRow();
+
+        Egreso egreso = new Egreso();
+        egreso.setDetalle((String) tblListar.getValueAt(filaseleccionada, 0));
+        egreso.setCategoria(conCat.selectId((String) tblListar.getValueAt(filaseleccionada, 3)));
+
+        if (JOptionPane.showConfirmDialog(this, "Esta Seguro que desea eliminar la Categoria?", "Eliminar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
+            if (conEgr.delete(egreso)) {
+                JOptionPane.showMessageDialog(this, "Se a eliminado Correctamente", "Eliminado", JOptionPane.INFORMATION_MESSAGE);
+                this.listar();
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Se ha cancelado la eliminacion", "Informacion", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        // TODO add your handling code here:
+        double suma2 = 0;
+        this.limpiarTabla();
+        fecha fecha = new fecha();
+        if (txtBuscar.getText().length() == 0) {
+            this.listar();
+        } else {
+            if (fecha.esFecha(txtBuscar.getText())) {
+                List<Egreso> listaEgreso = conEgr.selectFecha(txtBuscar.getText());
+                DefaultTableModel modelo = (DefaultTableModel) tblListar.getModel();
+                for (int i = 0; i < listaEgreso.size(); i++) {
+                    Egreso getE = (Egreso) listaEgreso.get(i);
+                    modelo.addRow(new Object[]{getE.getDetalle(), getE.getMonto(), getE.getFecha(), conCat.selectCateNom(getE.getCategoria())});
+
+                    suma2 += getE.getMonto();
+                }
+
+                lblTotal.setText("Total de Egresos del " + txtBuscar.getText());
+                txtTotal.setText("" + suma2);
+            } else {
+                List<Egreso> listaEgreso = conEgr.selectCategoria(conCat.selectId(txtBuscar.getText()));
+                DefaultTableModel modelo = (DefaultTableModel) tblListar.getModel();
+                for (int i = 0; i < listaEgreso.size(); i++) {
+                    Egreso getE = (Egreso) listaEgreso.get(i);
+                    modelo.addRow(new Object[]{getE.getDetalle(), getE.getMonto(), getE.getFecha(), conCat.selectCateNom(getE.getCategoria())});
+                    suma2 += getE.getMonto();
+                }
+                lblTotal.setText("Total de Egresos de la categoria " + txtBuscar.getText());
+                txtTotal.setText("" + suma2);
+            }
+        }
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
     public boolean validarMonto(String monto) {
         try {
             double d = Double.parseDouble(monto);
@@ -307,6 +416,48 @@ public class Egresos extends javax.swing.JInternalFrame {
         }
         return true;
     }
+
+    public void llenarConboCate() {
+        List<Categoria> lista = conCat.select();
+        cmbCategoria.removeAllItems();
+        cmbCategoria.addItem("Seleccionar");
+        for (int i = 0; i < lista.size(); i++) {
+            cmbCategoria.addItem(lista.get(i).getNombre());
+        }
+    }
+
+    public void lirmpiarCampos() {
+        txtDetalle.setText("");
+        txtMonto.setText("");
+        datFecha.setDate(null);
+        cmbCategoria.setSelectedIndex(0);
+        chkNuevo.setSelected(false);
+        btnCancelar.setEnabled(false);
+        btnGuardar.setEnabled(false);
+    }
+
+    private void limpiarTabla() {
+        DefaultTableModel modelo = (DefaultTableModel) tblListar.getModel();
+        for (int i = 0; i < tblListar.getRowCount(); i++) {
+            modelo.removeRow(i);
+            i -= 1;
+        }
+    }
+
+    public void listar() {
+        this.limpiarTabla();
+        double suma1 = 0;
+        List<Egreso> listE = conEgr.select();
+        DefaultTableModel modelo = (DefaultTableModel) tblListar.getModel();
+        for (int i = 0; i < listE.size(); i++) {
+            Egreso getE = (Egreso) listE.get(i);
+            modelo.addRow(new Object[]{getE.getDetalle(), getE.getMonto(), getE.getFecha(), conCat.selectCateNom(getE.getCategoria())});
+            suma1 += getE.getMonto();
+        }
+        lblTotal.setText("Total de Ingresos");
+        txtTotal.setText("" + suma1);
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;

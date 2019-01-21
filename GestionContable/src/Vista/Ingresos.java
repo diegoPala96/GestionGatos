@@ -6,9 +6,14 @@
 package Vista;
 
 import Controlador.con_Ingresos;
+import Controlador.fecha;
 import Modelo.Ingreso;
+import java.awt.HeadlessException;
+import java.text.ParseException;
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -18,13 +23,15 @@ import javax.swing.table.DefaultTableModel;
  * @author Sanix
  */
 public class Ingresos extends javax.swing.JInternalFrame {
+    
+    private con_Ingresos conIng = new con_Ingresos();
 
     /**
      * Creates new form Ingresos
      */
     public Ingresos() {
         initComponents();
-      //  rellenar();
+        this.listar();
     }
 
     /**
@@ -146,23 +153,42 @@ public class Ingresos extends javax.swing.JInternalFrame {
         lblBuscar.setText("Buscar:");
 
         btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/buscar.png"))); // NOI18N
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
 
         btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/eliminar.png"))); // NOI18N
         btnEliminar.setText("Eliminar");
         btnEliminar.setEnabled(false);
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
 
         tblListar.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3"
+                "Detalle", "Monto", "Fecha"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tblListar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblListarMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblListar);
 
         lblTotal.setText("Total Ingresos");
@@ -250,12 +276,7 @@ public class Ingresos extends javax.swing.JInternalFrame {
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
-        txtDetalle.setText("");
-        txtMonto.setText("");
-        dateFecha2.setDate(null);
-        chkNuevo.setSelected(false);
-        btnCancelar.setEnabled(false);
-        btnGuardar.setEnabled(false);
+        this.lirmpiarCampos();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
@@ -269,7 +290,7 @@ public class Ingresos extends javax.swing.JInternalFrame {
                     System.out.println("Agregado");
                     ingreso.setDetalle(txtDetalle.getText());
                     ingreso.setMonto(Double.parseDouble(txtMonto.getText()));
-
+                    
                     Calendar cal;
                     int d, m, a;
                     cal = dateFecha2.getCalendar();
@@ -278,14 +299,13 @@ public class Ingresos extends javax.swing.JInternalFrame {
                     m = cal.get(Calendar.MONTH);
                     a = cal.get(Calendar.YEAR) - 1900;
                     
-                    
                     ingreso.setFecha(new Date(a, m, d));
-                    con_Ingresos ingre= new con_Ingresos();
-                    ingre.Insert(ingreso);
-                    ingre.select();
                     
-                    
-                    
+                    if (conIng.Insert(ingreso)) {
+                        JOptionPane.showMessageDialog(this, "Se a agregado Correctamente", "Agregado", JOptionPane.INFORMATION_MESSAGE);
+                        this.listar();
+                        this.lirmpiarCampos();
+                    }
                     
                 } else {
                     JOptionPane.showMessageDialog(this, "Se ha cancelado la agregacion", "Informacion", JOptionPane.INFORMATION_MESSAGE);
@@ -296,6 +316,65 @@ public class Ingresos extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_btnGuardarActionPerformed
 
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        // TODO add your handling code here:
+        int filaseleccionada = tblListar.getSelectedRow();
+        
+        Ingreso ingreso = new Ingreso();
+        ingreso.setDetalle((String) tblListar.getValueAt(filaseleccionada, 0));
+        
+        if (JOptionPane.showConfirmDialog(this, "Esta Seguro que desea eliminar la Categoria?", "Eliminar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
+            if (conIng.delete(ingreso)) {
+                JOptionPane.showMessageDialog(this, "Se a eliminado Correctamente", "Eliminado", JOptionPane.INFORMATION_MESSAGE);
+                this.listar();
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Se ha cancelado la eliminacion", "Informacion", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        // TODO add your handling code here:
+        this.limpiarTabla();
+        double suma = 0;
+        fecha fecha = new fecha();
+        if (txtBuscar.getText().length() == 0) {
+            this.listar();
+        } else {
+            if (fecha.esFecha(txtBuscar.getText())) {
+                List<Ingreso> listaEgreso = conIng.selectFecha(txtBuscar.getText());
+                DefaultTableModel modelo = (DefaultTableModel) tblListar.getModel();
+                for (int i = 0; i < listaEgreso.size(); i++) {
+                    Ingreso getI = (Ingreso) listaEgreso.get(i);
+                    modelo.addRow(new Object[]{getI.getDetalle(), getI.getMonto(), getI.getFecha()});
+                    suma += getI.getMonto();
+                }
+                lblTotal.setText("Total de Ingresos en la fecha " + txtBuscar.getText());
+                txtTotal.setText("" + suma);
+            } else {
+                JOptionPane.showMessageDialog(this, "Debe Ingresar una fecha", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
+                txtBuscar.setText("");
+            }
+        }
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void tblListarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblListarMouseClicked
+        // TODO add your handling code here:
+        int filaseleccionada;
+        try {
+            //Guardamos en un entero la fila seleccionada.
+            filaseleccionada = tblListar.getSelectedRow();
+            if (filaseleccionada == -1) {
+                JOptionPane.showMessageDialog(null, "No ha seleccionado ninguna fila.");
+                btnEliminar.setEnabled(false);
+            } else {
+                btnEliminar.setEnabled(true);
+            }
+        } catch (HeadlessException ex) {
+            JOptionPane.showMessageDialog(null, "Error: " + ex + "\nInténtelo nuevamente", " .::Error En la Operacion::.", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_tblListarMouseClicked
+    
     public boolean validarMonto(String monto) {
         try {
             double d = Double.parseDouble(monto);
@@ -303,6 +382,37 @@ public class Ingresos extends javax.swing.JInternalFrame {
             return false;
         }
         return true;
+    }
+    
+    public void lirmpiarCampos() {
+        txtDetalle.setText("");
+        txtMonto.setText("");
+        dateFecha2.setDate(null);
+        chkNuevo.setSelected(false);
+        btnCancelar.setEnabled(false);
+        btnGuardar.setEnabled(false);
+    }
+    
+    private void limpiarTabla() {
+        DefaultTableModel modelo = (DefaultTableModel) tblListar.getModel();
+        for (int i = 0; i < tblListar.getRowCount(); i++) {
+            modelo.removeRow(i);
+            i -= 1;
+        }
+    }
+    
+    public void listar() {
+        this.limpiarTabla();
+        double suma = 0;
+        List<Ingreso> listE = conIng.select();
+        DefaultTableModel modelo = (DefaultTableModel) tblListar.getModel();
+        for (int i = 0; i < listE.size(); i++) {
+            Ingreso getI = (Ingreso) listE.get(i);
+            modelo.addRow(new Object[]{getI.getDetalle(), getI.getMonto(), getI.getFecha()});
+            suma += getI.getMonto();
+        }
+        lblTotal.setText("Total de Ingresos");
+        txtTotal.setText("" + suma);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -327,43 +437,4 @@ public class Ingresos extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtTotal;
     // End of variables declaration//GEN-END:variables
 
-
-    
-    	private void rellenar() {
-		limpiarTable();
-		con_Ingresos ci = new con_Ingresos();
-		DefaultTableModel model = (DefaultTableModel) tblListar.getModel();
-		int filas = 0;
-		int cont = 0;
-		for (Ingreso i : ci.select()) {
-
-			model.addRow(new Object[filas]);
-			tblListar.setValueAt(i.getDetalle(), cont, 0);
-			tblListar.setValueAt(i.getMonto(), cont, 1);
-			tblListar.setValueAt(i.getFecha(), cont, 2);
-			
-			filas++;
-			cont++;
-
-		}
-
-	}
-
-	protected void limpiarTable() {
-		tblListar = new JTable();
-		tblListar.setModel(new DefaultTableModel(new Object[][] {
-
-		}, new String[] { "detalle", "monto", "fecha"}));
-		//.addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING);
-
-		for (int i = 1; i < tblListar.getRowCount(); i++) {
-			tblListar.setValueAt("", i, 0);
-			tblListar.setValueAt("", i, 1);
-			tblListar.setValueAt("", i, 2);
-			
-		}
-		//filas=0;
-		
-	}
-    
 }

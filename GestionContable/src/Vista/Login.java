@@ -5,7 +5,7 @@
  */
 package Vista;
 
-import Controlador.Usuarios;
+import Controlador.con_usuario;
 import Modelo.Usuario;
 import java.util.Arrays;
 import javax.swing.JFrame;
@@ -189,7 +189,7 @@ public class Login extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         Usuario usuario = new Usuario();
-        Usuarios usr = new Usuarios();
+        con_usuario usr = new con_usuario();
         usuario.setUsername(txtUsername.getText());
         usuario.setPassword(pswPassword.getText());
         if (usr.login(usuario)) {

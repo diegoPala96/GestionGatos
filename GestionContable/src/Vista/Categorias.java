@@ -5,8 +5,12 @@
  */
 package Vista;
 
+import Controlador.con_categoria;
 import Modelo.Categoria;
+import java.awt.HeadlessException;
+import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -14,11 +18,14 @@ import javax.swing.JOptionPane;
  */
 public class Categorias extends javax.swing.JInternalFrame {
 
+    private con_categoria conCat = new con_categoria();
+
     /**
      * Creates new form Categorias
      */
     public Categorias() {
         initComponents();
+        this.listar();
     }
 
     /**
@@ -49,12 +56,15 @@ public class Categorias extends javax.swing.JInternalFrame {
         setClosable(true);
         setTitle("Categorias");
 
-        pnlRegistrar.setBorder(javax.swing.BorderFactory.createTitledBorder("Registrar Categoria"));
+        pnlRegistrar.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Registrar Categoria", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 18))); // NOI18N
 
+        lblDetalle.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         lblDetalle.setText("Detalle:");
 
+        lblDescripcion.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         lblDescripcion.setText("Descripcion:");
 
+        chkNuevo.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         chkNuevo.setText("Nuevo");
         chkNuevo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -62,6 +72,7 @@ public class Categorias extends javax.swing.JInternalFrame {
             }
         });
 
+        btnGuardar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/guardar.png"))); // NOI18N
         btnGuardar.setText("Guardar");
         btnGuardar.setEnabled(false);
@@ -122,27 +133,49 @@ public class Categorias extends javax.swing.JInternalFrame {
                 .addContainerGap(168, Short.MAX_VALUE))
         );
 
-        pnlListar.setBorder(javax.swing.BorderFactory.createTitledBorder("Listado de Categorias"));
+        pnlListar.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Listado de Categorias", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 18))); // NOI18N
 
+        lblBuscar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         lblBuscar.setText("Buscar:");
 
         btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/buscar.png"))); // NOI18N
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
 
+        btnEliminar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/eliminar.png"))); // NOI18N
         btnEliminar.setText("Eliminar");
         btnEliminar.setEnabled(false);
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
 
         tblCategorias.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Nombre", "Descripcion"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tblCategorias.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblCategoriasMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblCategorias);
 
         javax.swing.GroupLayout pnlListarLayout = new javax.swing.GroupLayout(pnlListar);
@@ -216,28 +249,104 @@ public class Categorias extends javax.swing.JInternalFrame {
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
-        txtDetalle.setText("");
-        txtDescripcion.setText("");
-        chkNuevo.setSelected(false);
-        btnCancelar.setEnabled(false);
-        btnGuardar.setEnabled(false);
+        this.lirmpiarCampos();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         // TODO add your handling code here:
         Categoria categoria = new Categoria();
+
         if (txtDetalle.getText().length() == 0 || txtDescripcion.getText().length() == 0) {
             JOptionPane.showMessageDialog(this, "Verifique que todos los campos esten llenos", "Verificar Campos", JOptionPane.WARNING_MESSAGE);
         } else {
             if (JOptionPane.showConfirmDialog(this, "Esta Seguro que desea agregar la nueva Categoria?", "Confirmar Categoria", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
                 categoria.setDescripcion(txtDescripcion.getText());
                 categoria.setNombre(txtDetalle.getText());
+                if (conCat.Insert(categoria)) {
+                    JOptionPane.showMessageDialog(this, "Se a agregado Correctamente", "Agregado", JOptionPane.INFORMATION_MESSAGE);
+                    this.listar();
+                    this.lirmpiarCampos();
+                }
             } else {
                 JOptionPane.showMessageDialog(this, "Se ha cancelado la agregacion", "Informacion", JOptionPane.INFORMATION_MESSAGE);
             }
         }
     }//GEN-LAST:event_btnGuardarActionPerformed
 
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        // TODO add your handling code here:
+        this.limpiarTabla();
+        if (txtBuscar.getText().length() == 0) {
+            this.listar();
+        } else {
+            List<Categoria> listC = conCat.selectNombre(txtBuscar.getText());
+            DefaultTableModel modelo = (DefaultTableModel) tblCategorias.getModel();
+            for (int i = 0; i < listC.size(); i++) {
+                Categoria getC = (Categoria) listC.get(i);
+                modelo.addRow(new Object[]{getC.getNombre(), getC.getDescripcion()});
+            }
+        }
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void tblCategoriasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblCategoriasMouseClicked
+        // TODO add your handling code here:
+        int filaseleccionada;
+        try {
+            //Guardamos en un entero la fila seleccionada.
+            filaseleccionada = tblCategorias.getSelectedRow();
+            if (filaseleccionada == -1) {
+                JOptionPane.showMessageDialog(null, "No ha seleccionado ninguna fila.");
+                btnEliminar.setEnabled(false);
+            } else {
+                btnEliminar.setEnabled(true);
+            }
+        } catch (HeadlessException ex) {
+            JOptionPane.showMessageDialog(null, "Error: " + ex + "\nInténtelo nuevamente", " .::Error En la Operacion::.", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_tblCategoriasMouseClicked
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        // TODO add your handling code here:
+        int filaseleccionada = tblCategorias.getSelectedRow();
+        Categoria categoria = new Categoria();
+        categoria.setNombre((String) tblCategorias.getValueAt(filaseleccionada, 0));
+        categoria.setDescripcion((String) tblCategorias.getValueAt(filaseleccionada, 1));
+
+        if (JOptionPane.showConfirmDialog(this, "Esta Seguro que desea eliminar la Categoria?", "Eliminar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
+            if (conCat.delete(categoria)) {
+                JOptionPane.showMessageDialog(this, "Se a eliminado Correctamente", "Eliminado", JOptionPane.INFORMATION_MESSAGE);
+                this.listar();
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Se ha cancelado la eliminacion", "Informacion", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
+    public void listar() {
+        this.limpiarTabla();
+        List<Categoria> listC = conCat.select();
+        DefaultTableModel modelo = (DefaultTableModel) tblCategorias.getModel();
+        for (int i = 0; i < listC.size(); i++) {
+            Categoria getC = (Categoria) listC.get(i);
+            modelo.addRow(new Object[]{getC.getNombre(), getC.getDescripcion()});
+        }
+    }
+
+    public void lirmpiarCampos() {
+        txtDetalle.setText("");
+        txtDescripcion.setText("");
+        chkNuevo.setSelected(false);
+        btnCancelar.setEnabled(false);
+        btnGuardar.setEnabled(false);
+    }
+
+    private void limpiarTabla() {
+        DefaultTableModel modelo = (DefaultTableModel) tblCategorias.getModel();
+        for (int i = 0; i < tblCategorias.getRowCount(); i++) {
+            modelo.removeRow(i);
+            i -= 1;
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;

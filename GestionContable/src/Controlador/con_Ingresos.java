@@ -22,78 +22,93 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
- 
+
+
 public class con_Ingresos {
-     private Conexion conexion = new Conexion();
+
+    private Conexion conexion = new Conexion();
     private Statement stmt;
-  //    PreparedStatement rs;
     private ResultSet rs;
-    private String consulta="";
-  //   consulta = "INSERT INTO Ingresos (descripcion,monto,fecha) values(?,?,?) ";
-     public void Insert(Ingreso ingreso) {
-		Connection c=null;
-        
-		 String query  = "INSERT INTO Ingresos (detalle,monto,fecha) values(?,?,?) ";
-		
-		
-	       
-	       try {
-	    	   
-	    	   c=conexion.getConexion();
-		
-                   PreparedStatement rs=c.prepareStatement(query);
-                   
-                  
-                    rs.setString    (1, ingreso.getDetalle());
-	            rs.setDouble    (2, ingreso.getMonto());
-                    rs.setDate    (3, (Date) ingreso.getFecha());
-				
-				
-		            
-				
-				
-	            // Indicamos que comience la actualizaciï¿½n de la tabla en nuestra base de datos
-	            rs.executeUpdate();
-	        	JOptionPane.showMessageDialog(null, "Operacion realizada correctamente");
-	            // Cerramos las conexiones, en orden inverso a su apertura
-	    
+    PreparedStatement ps;
+    private String consulta;
 
-	}catch(Exception e){
-		e.printStackTrace();
-		
-	}finally{
-		conexion.desconectar();
-	}
-     }
-
- public List<Ingreso> select() {
-     List<Ingreso> listProveedor= new ArrayList<Ingreso>();    
-     
+    public boolean Insert(Ingreso ingreso) {
         boolean retorno = false;
-        consulta = "SELECT detalle,monto,fecha FROM Ingresos ";
+        consulta = "INSERT INTO Ingresos (detalle,monto,fecha) values(?,?,?) ";
+        try {
+            ps = conexion.getConexion().prepareStatement(consulta);
+            ps.setString(1, ingreso.getDetalle());
+            ps.setDouble(2, ingreso.getMonto());
+            ps.setDate(3, (Date) ingreso.getFecha());
+
+            ps.executeUpdate();
+
+            ps.close();
+            conexion.desconectar();
+            retorno = true;
+        } catch (Exception e) {
+            System.out.println(e);
+            retorno = false;
+        }
+        return retorno;
+    }
+
+    public List<Ingreso> select() {
+        List<Ingreso> listIngreso = new ArrayList<Ingreso>();
+        consulta = "SELECT detalle,monto,fecha FROM Ingresos";
         try {
             stmt = conexion.getConexion().createStatement();
             rs = stmt.executeQuery(consulta);
             while (rs.next()) {
-                Ingreso mI=new Ingreso();
+                Ingreso mI = new Ingreso();
                 mI.setDetalle(rs.getString("detalle"));
                 mI.setMonto(rs.getDouble("monto"));
                 mI.setFecha(rs.getDate("fecha"));
-                
+                listIngreso.add(mI);
+
             }
             rs.close();
             stmt.close();
             conexion.desconectar();
         } catch (SQLException e) {
-            retorno = false;
             System.out.println(e);
         }
-        return listProveedor;
+        return listIngreso;
     }
 
+    public List<Ingreso> selectFecha(String fecha) {
+        List<Ingreso> ListIngreso = new ArrayList<Ingreso>();
+        consulta = "SELECT detalle,monto,fecha FROM Ingresos WHERE fecha = '" + fecha + "'";
+        try {
+            stmt = conexion.getConexion().createStatement();
+            rs = stmt.executeQuery(consulta);
+            while (rs.next()) {
+                Ingreso ingr = new Ingreso();
+                ingr.setDetalle(rs.getString("detalle"));
+                ingr.setMonto(rs.getDouble("monto"));
+                ingr.setFecha(rs.getDate("fecha"));
+                ListIngreso.add(ingr);
+            }
+            rs.close();
+            stmt.close();
+            conexion.desconectar();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return ListIngreso;
+    }
 
-
+    public boolean delete(Ingreso ingreso) {
+        boolean retorno = false;
+        consulta = "DELETE FROM Egresos WHERE detalle = '" + ingreso.getDetalle() + "'";
+        try {
+            stmt = conexion.getConexion().createStatement();
+            stmt.execute(consulta);
+            retorno = true;
+        } catch (SQLException ex) {
+            System.out.println("ex");
+        }
+        return retorno;
+    }
 
 }
-    
-	       

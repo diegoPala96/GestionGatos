@@ -14,15 +14,15 @@ import java.sql.Statement;
  *
  * @author Sanix
  */
-public class Usuarios {
+public class con_usuario {
 
     private Conexion conexion = new Conexion();
-    
+    ;
     private Statement stmt;
     private ResultSet rs;
     private String consulta;
 
-    public Usuarios() {
+    public con_usuario() {
 
     }
 

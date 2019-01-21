@@ -16,7 +16,7 @@ public class Egreso {
     private String detalle;
     private double monto;
     private Date fecha;
-    private String categoria;
+    private int categoria;
 
     public Egreso() {
     }
@@ -45,11 +45,11 @@ public class Egreso {
         this.fecha = fecha;
     }
 
-    public String getCategoria() {
+    public int getCategoria() {
         return categoria;
     }
 
-    public void setCategoria(String categoria) {
+    public void setCategoria(int categoria) {
         this.categoria = categoria;
     }
 
