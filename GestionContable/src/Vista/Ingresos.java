@@ -10,6 +10,8 @@ import Modelo.Ingreso;
 import java.sql.Date;
 import java.util.Calendar;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -22,6 +24,7 @@ public class Ingresos extends javax.swing.JInternalFrame {
      */
     public Ingresos() {
         initComponents();
+      //  rellenar();
     }
 
     /**
@@ -150,13 +153,14 @@ public class Ingresos extends javax.swing.JInternalFrame {
 
         tblListar.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Title 1", "Title 2", "Title 3"
             }
         ));
         jScrollPane1.setViewportView(tblListar);
@@ -278,6 +282,9 @@ public class Ingresos extends javax.swing.JInternalFrame {
                     ingreso.setFecha(new Date(a, m, d));
                     con_Ingresos ingre= new con_Ingresos();
                     ingre.Insert(ingreso);
+                    ingre.select();
+                    
+                    
                     
                     
                 } else {
@@ -321,4 +328,42 @@ public class Ingresos extends javax.swing.JInternalFrame {
     // End of variables declaration//GEN-END:variables
 
 
+    
+    	private void rellenar() {
+		limpiarTable();
+		con_Ingresos ci = new con_Ingresos();
+		DefaultTableModel model = (DefaultTableModel) tblListar.getModel();
+		int filas = 0;
+		int cont = 0;
+		for (Ingreso i : ci.select()) {
+
+			model.addRow(new Object[filas]);
+			tblListar.setValueAt(i.getDetalle(), cont, 0);
+			tblListar.setValueAt(i.getMonto(), cont, 1);
+			tblListar.setValueAt(i.getFecha(), cont, 2);
+			
+			filas++;
+			cont++;
+
+		}
+
+	}
+
+	protected void limpiarTable() {
+		tblListar = new JTable();
+		tblListar.setModel(new DefaultTableModel(new Object[][] {
+
+		}, new String[] { "detalle", "monto", "fecha"}));
+		//.addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING);
+
+		for (int i = 1; i < tblListar.getRowCount(); i++) {
+			tblListar.setValueAt("", i, 0);
+			tblListar.setValueAt("", i, 1);
+			tblListar.setValueAt("", i, 2);
+			
+		}
+		//filas=0;
+		
+	}
+    
 }
