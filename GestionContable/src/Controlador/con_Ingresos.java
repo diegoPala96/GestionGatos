@@ -100,7 +100,7 @@ public class con_Ingresos {
 
     public boolean delete(Ingreso ingreso) {
         boolean retorno = false;
-        consulta = "DELETE FROM Egresos WHERE detalle = '" + ingreso.getDetalle() + "'";
+        consulta = "DELETE FROM Ingresos WHERE detalle = '" + ingreso.getDetalle() + "'";
         try {
             stmt = conexion.getConexion().createStatement();
             stmt.execute(consulta);
